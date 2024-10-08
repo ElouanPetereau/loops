@@ -14,8 +14,10 @@ export class FileManager {
   }
 
   public set activeNotebookPath(path: string) {
+    // Remove RTC: prefix to fix potential issues with https://github.com/jupyterlab/jupyter-collab
+    let new_path = path.startsWith('RTC:') ? path.slice(4) : path;
     // console.log('Setting active notebook path to', path);
-    this._activeNotebookPath = path;
+    this._activeNotebookPath = new_path;
   }
 
   public writeToFile(trackExport: string): Promise<void> {
